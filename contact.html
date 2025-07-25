@@ -59,25 +59,27 @@
 
   <!-- JavaScript to handle inline thank you -->
   <script>
-    const form = document.getElementById("contactForm");
-    const thankyouMessage = document.getElementById("thankyouMessage");
+  const form = document.getElementById("contactForm");
+  const thankyouMessage = document.getElementById("thankyouMessage");
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      const formData = new FormData(form);
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData).toString()
-      })
-      .then(() => {
-        form.reset();
-        form.classList.add("d-none");
-        thankyouMessage.classList.remove("d-none");
-      })
-      .catch((error) => alert("Error submitting form. Please try again!"));
+    const formData = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      body: new URLSearchParams(formData).toString(),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+    .then(() => {
+      form.reset();
+      form.classList.add("d-none");
+      thankyouMessage.classList.remove("d-none");
+    })
+    .catch((error) => {
+      console.error("Form submission error:", error);
+      alert("Error submitting form. Please try again later.");
     });
-  </script>
-</body>
-</html>
+  });
+</script>
